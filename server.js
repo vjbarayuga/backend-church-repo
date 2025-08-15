@@ -17,6 +17,11 @@ import readingRoutes from "./routes/readingRoutes.js";
 
 dotenv.config();
 
+// Debug log to check if variables are loaded (remove after fixing)
+console.log("Environment check:");
+console.log("MONGO_URI exists:", !!process.env.MONGO_URI);
+console.log("PORT:", process.env.PORT);
+
 const app = express();
 
 app.use(cors());
