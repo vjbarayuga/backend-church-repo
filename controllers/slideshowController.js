@@ -1,25 +1,16 @@
 import Slideshow from "../models/Slideshow.js";
-import fs from "fs";
-import path from "path";
 
 // Upload image file
 export const uploadImage = async (req, res) => {
   try {
-    console.log("Upload request received");
-    console.log("File:", req.file);
-
     if (!req.file) {
-      console.log("No file in request");
       return res.status(400).json({ error: "No file uploaded" });
     }
-
-    // Return the file path relative to the public directory
-    const imagePath = `/images/${req.file.filename}`;
-    console.log("Returning image path:", imagePath);
-
+    // Cloudinary multer-storage-cloudinary puts the URL in req.file.path
+    const imageUrl = req.file.path;
     res.json({
       message: "File uploaded successfully",
-      filePath: imagePath,
+      filePath: imageUrl,
       filename: req.file.filename,
     });
   } catch (error) {

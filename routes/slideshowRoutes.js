@@ -1,5 +1,5 @@
 import express from "express";
-import upload from "../middleware/upload.js";
+import { upload } from "../config/cloudinary.js";
 import {
   getSlides,
   getAllSlides,
