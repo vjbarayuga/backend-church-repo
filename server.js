@@ -41,8 +41,23 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/sacraments", sacramentRoutes);
 app.use("/api/readings", readingRoutes);
 
-const PORT = process.env.PORT || 5000;
+// Global error handlers for uncaught exceptions and unhandled rejections
+process.on("uncaughtException", (err) => {
+  console.error(
+    "Uncaught Exception:",
+    err && err.stack ? err.stack : JSON.stringify(err)
+  );
+});
+process.on("unhandledRejection", (reason, promise) => {
+  console.error(
+    "Unhandled Rejection at:",
+    promise,
+    "reason:",
+    reason && reason.stack ? reason.stack : JSON.stringify(reason)
+  );
+});
 
+const PORT = process.env.PORT || 5000;
 connectToMongoDB().then(() => {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

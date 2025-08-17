@@ -14,8 +14,26 @@ export const uploadImage = async (req, res) => {
       filename: req.file.filename,
     });
   } catch (error) {
-    console.error("Upload error:", error);
-    res.status(500).json({ error: "Failed to upload file" });
+    // Enhanced error logging for all possible details
+    console.error("=== Upload error (raw):", error);
+    if (error && typeof error === "object") {
+      for (const key of Object.keys(error)) {
+        console.error(`=== Upload error property [${key}]:`, error[key]);
+      }
+    }
+    if (error instanceof Error) {
+      console.error("=== Upload error message:", error.message);
+      console.error("=== Upload error stack:", error.stack);
+    }
+    try {
+      console.error("=== Upload error JSON:", JSON.stringify(error));
+    } catch (e) {
+      console.error("=== Upload error JSON failed:", e);
+    }
+    res.status(500).json({
+      error: "Failed to upload file",
+      details: error.message || error,
+    });
   }
 };
 
