@@ -1,6 +1,6 @@
 import express from "express";
 import { upload } from "../config/cloudinary.js";
-import { uploadImage } from "../controllers/slideshowController.js";
+import { uploadImage } from "../controllers/pageContentController.js";
 import {
   getPageContent,
   getAllPageContents,

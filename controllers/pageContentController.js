@@ -1,3 +1,26 @@
+// Upload hero image for page content
+export const uploadImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+    // Cloudinary multer-storage-cloudinary puts the URL in req.file.path
+    const imageUrl = req.file.path;
+    res.json({
+      message: "File uploaded successfully",
+      filePath: imageUrl,
+      filename: req.file.filename,
+    });
+  } catch (error) {
+    console.error("PageContent upload error:", error);
+    res
+      .status(500)
+      .json({
+        error: "Failed to upload file",
+        details: error.message || error,
+      });
+  }
+};
 import PageContent from "../models/PageContent.js";
 
 // Get page content by page name
