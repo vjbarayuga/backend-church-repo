@@ -6,7 +6,15 @@ const pageContentSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      enum: ["about", "priest", "mass-times", "services"],
+      enum: [
+        "about",
+        "priest",
+        "mass-times",
+        "services",
+        "events",
+        "announcements",
+        "our-history",
+      ],
     },
     heroImage: {
       type: String,

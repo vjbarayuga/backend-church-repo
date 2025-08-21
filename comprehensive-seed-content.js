@@ -84,6 +84,15 @@ Community service is an integral part of our parish mission. We organize various
 We invite you to explore our various ministries and find ways to get involved in the life of our parish community.`,
         isActive: true,
       },
+      // ADDED our-history entry
+      {
+        pageName: "our-history",
+        heroImage: "/images/church-history.jpg",
+        heroTitle: "Our History",
+        heroSubtitle: "A Legacy of Faith Since 1950",
+        content: `Our parish has a rich history of faith, service, and community since 1950. Generations have come together to worship, celebrate, and support one another in Christ.`,
+        isActive: true,
+      },
     ];
 
     await PageContent.insertMany(pageContents);
