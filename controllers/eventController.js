@@ -1,5 +1,7 @@
 // controllers/eventController.js
 import Event from "../models/Event.js";
+// For file upload
+import path from "path";
 
 export const getAllEvents = async (req, res) => {
   const events = await Event.find();
@@ -12,16 +14,38 @@ export const getEventById = async (req, res) => {
 };
 
 export const createEvent = async (req, res) => {
-  const newEvent = new Event(req.body);
-  await newEvent.save();
-  res.status(201).json(newEvent);
+  try {
+    let heroImage = req.body.heroImage;
+    if (req.file) {
+      // Save relative path for frontend use
+      heroImage = path.join("/images", req.file.filename).replace(/\\/g, "/");
+    }
+    const newEvent = new Event({
+      ...req.body,
+      heroImage,
+    });
+    await newEvent.save();
+    res.status(201).json(newEvent);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create event" });
+  }
 };
 
 export const updateEvent = async (req, res) => {
-  const updated = await Event.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  res.json(updated);
+  try {
+    let updateData = { ...req.body };
+    if (req.file) {
+      updateData.heroImage = path
+        .join("/images", req.file.filename)
+        .replace(/\\/g, "/");
+    }
+    const updated = await Event.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+    });
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update event" });
+  }
 };
 
 export const deleteEvent = async (req, res) => {

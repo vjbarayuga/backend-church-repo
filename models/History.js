@@ -1,13 +1,20 @@
 // models/History.js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const historySchema = new mongoose.Schema({
-  content: {
-    type: String,
-    required: true,
+const historySchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+    heroImage: {
+      type: String,
+      default: "",
+    },
   },
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  }
+);
 
-export default mongoose.model('History', historySchema);
+export default mongoose.model("History", historySchema);

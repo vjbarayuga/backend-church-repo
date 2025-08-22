@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
   getAllMassSchedules,
   getMassScheduleById,
@@ -6,13 +7,14 @@ import {
   updateMassSchedule,
   deleteMassSchedule,
 } from "../controllers/massScheduleController.js";
+import upload from "../middleware/upload.js";
 
 const router = express.Router();
 
 router.get("/", getAllMassSchedules);
 router.get("/:id", getMassScheduleById);
-router.post("/", createMassSchedule);
-router.put("/:id", updateMassSchedule);
+router.post("/", upload.single("image"), createMassSchedule);
+router.put("/:id", upload.single("image"), updateMassSchedule);
 router.delete("/:id", deleteMassSchedule);
 
 export default router;

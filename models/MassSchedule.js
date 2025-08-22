@@ -9,6 +9,7 @@ const massScheduleSchema = new mongoose.Schema({
     ref: "Priest",
     required: false,
   },
+  heroImage: { type: String }, // Path or URL to hero image
 });
 
 export default mongoose.model("MassSchedule", massScheduleSchema);

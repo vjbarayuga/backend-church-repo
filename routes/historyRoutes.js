@@ -1,10 +1,12 @@
 // routes/historyRoutes.js
-import express from 'express';
-import { getHistory, updateHistory } from '../controllers/historyController.js';
+
+import express from "express";
+import { getHistory, updateHistory } from "../controllers/historyController.js";
+import upload from "../middleware/upload.js";
 
 const router = express.Router();
 
-router.get('/', getHistory);
-router.put('/', updateHistory); // or use POST if preferred
+router.get("/", getHistory);
+router.put("/", upload.single("image"), updateHistory); // or use POST if preferred
 
 export default router;

@@ -1,4 +1,5 @@
 import Service from "../models/Service.js";
+import path from "path";
 
 // Get all active services
 export const getServices = async (req, res) => {
@@ -42,7 +43,14 @@ export const getServiceById = async (req, res) => {
 // Create new service
 export const createService = async (req, res) => {
   try {
-    const service = new Service(req.body);
+    let image = req.body.image;
+    if (req.file) {
+      image = path.join("/images", req.file.filename).replace(/\\/g, "/");
+    }
+    const service = new Service({
+      ...req.body,
+      image,
+    });
     await service.save();
     res.status(201).json(service);
   } catch (error) {
@@ -54,7 +62,13 @@ export const createService = async (req, res) => {
 // Update service
 export const updateService = async (req, res) => {
   try {
-    const service = await Service.findByIdAndUpdate(req.params.id, req.body, {
+    let updateData = { ...req.body };
+    if (req.file) {
+      updateData.image = path
+        .join("/images", req.file.filename)
+        .replace(/\\/g, "/");
+    }
+    const service = await Service.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
       runValidators: true,
     });

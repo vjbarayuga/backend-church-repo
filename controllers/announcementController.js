@@ -1,5 +1,6 @@
 // controllers/announcementController.js
 import Announcement from "../models/Announcement.js";
+import path from "path";
 
 export const getAllAnnouncements = async (req, res) => {
   const announcements = await Announcement.find();
@@ -12,18 +13,39 @@ export const getAnnouncementById = async (req, res) => {
 };
 
 export const createAnnouncement = async (req, res) => {
-  const newAnnouncement = new Announcement(req.body);
-  await newAnnouncement.save();
-  res.status(201).json(newAnnouncement);
+  try {
+    let heroImage = req.body.heroImage;
+    if (req.file) {
+      heroImage = path.join("/images", req.file.filename).replace(/\\/g, "/");
+    }
+    const newAnnouncement = new Announcement({
+      ...req.body,
+      heroImage,
+    });
+    await newAnnouncement.save();
+    res.status(201).json(newAnnouncement);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create announcement" });
+  }
 };
 
 export const updateAnnouncement = async (req, res) => {
-  const updated = await Announcement.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
-  res.json(updated);
+  try {
+    let updateData = { ...req.body };
+    if (req.file) {
+      updateData.heroImage = path
+        .join("/images", req.file.filename)
+        .replace(/\\/g, "/");
+    }
+    const updated = await Announcement.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update announcement" });
+  }
 };
 
 export const deleteAnnouncement = async (req, res) => {
