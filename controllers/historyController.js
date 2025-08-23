@@ -1,6 +1,6 @@
 // controllers/historyController.js
-import History from '../models/History.js';
-import path from 'path';
+import History from "../models/History.js";
+import path from "path";
 
 // Get the church history (assumes only one record)
 export const getHistory = async (req, res) => {
@@ -9,7 +9,7 @@ export const getHistory = async (req, res) => {
     if (!history) return res.json({ content: "" }); // default fallback
     res.json(history);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching church history.' });
+    res.status(500).json({ message: "Error fetching church history." });
   }
 };
 
@@ -19,7 +19,7 @@ export const updateHistory = async (req, res) => {
     const { content } = req.body;
     let heroImage = req.body.heroImage;
     if (req.file) {
-      heroImage = path.join('/images', req.file.filename).replace(/\\/g, '/');
+      heroImage = path.join("/images", req.file.filename).replace(/\\/g, "/");
     }
     let history = await History.findOne();
     if (history) {
@@ -32,6 +32,6 @@ export const updateHistory = async (req, res) => {
     }
     res.json(history);
   } catch (error) {
-    res.status(500).json({ message: 'Error saving church history.' });
+    res.status(500).json({ message: "Error saving church history." });
   }
 };
