@@ -36,6 +36,23 @@ const pageContentSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    // For mass-times page only
+    specialSchedules: {
+      type: Array, // Array of objects
+      default: [],
+    },
+    officeHours: {
+      type: Array, // Array of { days, hours }
+      default: [],
+    },
+    officeEmergencyNote: {
+      type: String,
+      default: "",
+    },
+    contactSection: {
+      type: Object, // { heading, description, phone, email }
+      default: {},
+    },
   },
   {
     timestamps: true,

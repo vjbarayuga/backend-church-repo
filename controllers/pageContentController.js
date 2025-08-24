@@ -13,12 +13,10 @@ export const uploadImage = async (req, res) => {
     });
   } catch (error) {
     console.error("PageContent upload error:", error);
-    res
-      .status(500)
-      .json({
-        error: "Failed to upload file",
-        details: error.message || error,
-      });
+    res.status(500).json({
+      error: "Failed to upload file",
+      details: error.message || error,
+    });
   }
 };
 import PageContent from "../models/PageContent.js";
@@ -31,6 +29,23 @@ export const getPageContent = async (req, res) => {
 
     if (!content) {
       return res.status(404).json({ error: "Page content not found" });
+    }
+
+    // For mass-times, ensure all new fields are present
+    if (pageName === "mass-times") {
+      const {
+        specialSchedules = [],
+        officeHours = [],
+        officeEmergencyNote = "",
+        contactSection = { heading: "", description: "", phone: "", email: "" },
+      } = content;
+      return res.json({
+        ...content.toObject(),
+        specialSchedules,
+        officeHours,
+        officeEmergencyNote,
+        contactSection,
+      });
     }
 
     res.json(content);
@@ -55,7 +70,25 @@ export const getAllPageContents = async (req, res) => {
 export const upsertPageContent = async (req, res) => {
   try {
     const { pageName } = req.params;
-    const updateData = req.body;
+    let updateData = req.body;
+
+    // Only allow special fields for mass-times
+    if (pageName === "mass-times") {
+      updateData.specialSchedules = req.body.specialSchedules || [];
+      updateData.officeHours = req.body.officeHours || [];
+      updateData.officeEmergencyNote = req.body.officeEmergencyNote || "";
+      updateData.contactSection = req.body.contactSection || {
+        heading: "",
+        description: "",
+        phone: "",
+        email: "",
+      };
+    } else {
+      delete updateData.specialSchedules;
+      delete updateData.officeHours;
+      delete updateData.officeEmergencyNote;
+      delete updateData.contactSection;
+    }
 
     const content = await PageContent.findOneAndUpdate(
       { pageName },
