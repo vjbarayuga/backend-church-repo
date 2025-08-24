@@ -19,7 +19,7 @@ export const updateHistory = async (req, res) => {
     const { content } = req.body;
     let heroImage = req.body.heroImage;
     if (req.file) {
-      heroImage = path.join("/images", req.file.filename).replace(/\\/g, "/");
+      heroImage = req.file.path; // Cloudinary URL
     }
     let history = await History.findOne();
     if (history) {

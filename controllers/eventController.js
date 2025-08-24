@@ -17,8 +17,7 @@ export const createEvent = async (req, res) => {
   try {
     let heroImage = req.body.heroImage;
     if (req.file) {
-      // Save relative path for frontend use
-      heroImage = path.join("/images", req.file.filename).replace(/\\/g, "/");
+      heroImage = req.file.path; // Cloudinary URL
     }
     const newEvent = new Event({
       ...req.body,
@@ -35,9 +34,7 @@ export const updateEvent = async (req, res) => {
   try {
     let updateData = { ...req.body };
     if (req.file) {
-      updateData.heroImage = path
-        .join("/images", req.file.filename)
-        .replace(/\\/g, "/");
+      updateData.heroImage = req.file.path; // Cloudinary URL
     }
     const updated = await Event.findByIdAndUpdate(req.params.id, updateData, {
       new: true,

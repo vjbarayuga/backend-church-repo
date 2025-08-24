@@ -1,10 +1,16 @@
 import Service from "../models/Service.js";
 import path from "path";
 
+// Only allow these services
+const allowedServices = ["Holy Baptism", "Christian Burial", "Holy Matrimony"];
+
 // Get all active services
 export const getServices = async (req, res) => {
   try {
-    const services = await Service.find({ isActive: true }).sort({
+    const services = await Service.find({
+      isActive: true,
+      name: { $in: allowedServices },
+    }).sort({
       order: 1,
       name: 1,
     });
@@ -18,7 +24,9 @@ export const getServices = async (req, res) => {
 // Get all services (admin)
 export const getAllServices = async (req, res) => {
   try {
-    const services = await Service.find().sort({ order: 1, name: 1 });
+    const services = await Service.find({
+      name: { $in: allowedServices },
+    }).sort({ order: 1, name: 1 });
     res.json(services);
   } catch (error) {
     console.error("Error fetching services:", error);
@@ -30,7 +38,7 @@ export const getAllServices = async (req, res) => {
 export const getServiceById = async (req, res) => {
   try {
     const service = await Service.findById(req.params.id);
-    if (!service) {
+    if (!service || !allowedServices.includes(service.name)) {
       return res.status(404).json({ error: "Service not found" });
     }
     res.json(service);
@@ -43,9 +51,12 @@ export const getServiceById = async (req, res) => {
 // Create new service
 export const createService = async (req, res) => {
   try {
+    if (!allowedServices.includes(req.body.name)) {
+      return res.status(400).json({ error: "Service not allowed" });
+    }
     let image = req.body.image;
     if (req.file) {
-      image = path.join("/images", req.file.filename).replace(/\\/g, "/");
+      image = req.file.path; // Cloudinary URL
     }
     const service = new Service({
       ...req.body,
@@ -62,11 +73,12 @@ export const createService = async (req, res) => {
 // Update service
 export const updateService = async (req, res) => {
   try {
+    if (!allowedServices.includes(req.body.name)) {
+      return res.status(400).json({ error: "Service not allowed" });
+    }
     let updateData = { ...req.body };
     if (req.file) {
-      updateData.image = path
-        .join("/images", req.file.filename)
-        .replace(/\\/g, "/");
+      updateData.image = req.file.path; // Cloudinary URL
     }
     const service = await Service.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
@@ -87,10 +99,11 @@ export const updateService = async (req, res) => {
 // Delete service
 export const deleteService = async (req, res) => {
   try {
-    const service = await Service.findByIdAndDelete(req.params.id);
-    if (!service) {
+    const service = await Service.findById(req.params.id);
+    if (!service || !allowedServices.includes(service.name)) {
       return res.status(404).json({ error: "Service not found" });
     }
+    await Service.findByIdAndDelete(req.params.id);
     res.json({ message: "Service deleted successfully" });
   } catch (error) {
     console.error("Error deleting service:", error);

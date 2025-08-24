@@ -101,131 +101,73 @@ We invite you to explore our various ministries and find ways to get involved in
     // Seed Services
     const services = [
       {
-        name: "Religious Education",
-        description:
-          "Comprehensive faith formation programs for children, youth, and adults to deepen understanding of Catholic teachings and traditions.",
-        image: "/images/religious-education.jpg",
+        name: "Holy Baptism",
+        description: "The sacrament of initiation into the Catholic Church, cleansing from original sin and welcoming the individual into the community of faith.",
+        image: "/images/baptism.jpg",
         requirements: [
-          "Registration form completed",
-          "Baptismal certificate (for children)",
-          "Parent/guardian participation (for minors)",
+          "Birth certificate of the child (original or certified copy)",
+          "Parents' marriage certificate (if married in the Catholic Church)",
+          "Godparents' certificates of confirmation (must be practicing Catholics)",
+          "Pre-baptismal seminar attendance (for first-time parents)"
         ],
         processSteps: [
-          {
-            step: "Registration",
-            description:
-              "Complete registration form and provide required documents",
-          },
-          {
-            step: "Orientation",
-            description: "Attend orientation session for parents and students",
-          },
-          {
-            step: "Classes Begin",
-            description: "Regular weekly classes begin according to schedule",
-          },
+          { step: "Initial Meeting", description: "Meet with parish priest or deacon to discuss baptism" },
+          { step: "Document Submission", description: "Submit all required documents to parish office" },
+          { step: "Attend Seminar", description: "Parents and godparents attend pre-baptismal seminar" },
+          { step: "Final Preparation", description: "Review ceremony details and finalize arrangements" },
+          { step: "Baptism Ceremony", description: "Celebration of the sacrament" }
         ],
-        fees: "₱500 per academic year",
-        contactInfo: "Contact the Parish Office at (02) 123-4567",
+        fees: "₱1,000 (includes certificate and candle); additional donations optional",
+        contactInfo: "Parish Secretary: (02) 123-4567 | baptism@church.org",
         order: 1,
-        isActive: true,
+        isActive: true
       },
       {
-        name: "Youth Ministry",
-        description:
-          "Dynamic programs and activities designed to engage young people in faith, fellowship, and service to the community.",
-        image: "/images/youth-ministry.jpg",
+        name: "Christian Burial",
+        description: "The Church's final farewell to the faithful departed, commending their soul to God's mercy and celebrating the hope of resurrection.",
+        image: "/images/burial.jpg",
         requirements: [
-          "Ages 13-25",
-          "Parent/guardian consent (for minors)",
-          "Commitment to participation",
+          "Death certificate (official)",
+          "Baptismal certificate of deceased (if available)",
+          "Funeral home coordination (church must coordinate with funeral director)"
         ],
         processSteps: [
-          {
-            step: "Introduction",
-            description: "Attend a youth ministry meeting or event",
-          },
-          {
-            step: "Registration",
-            description: "Complete registration and provide emergency contacts",
-          },
-          {
-            step: "Participation",
-            description: "Join regular activities and ministry programs",
-          },
+          { step: "Contact Parish", description: "Family contacts parish office to arrange funeral" },
+          { step: "Documentation", description: "Submit required documents and arrange details" },
+          { step: "Wake Service", description: "Prayer service at funeral home or church" },
+          { step: "Funeral Mass", description: "Celebration of funeral liturgy" },
+          { step: "Committal", description: "Final prayers at the cemetery" }
         ],
-        fees: "Free - donations welcome",
-        contactInfo: "Youth Minister: youthministry@church.org",
+        fees: "₱2,000 (Funeral Mass); ₱1,500 (church musicians, if requested); ₱500 (additional prayers)",
+        contactInfo: "Parish Priest: (0917) 123-4567 | (02) 123-4567",
         order: 2,
-        isActive: true,
+        isActive: true
       },
       {
-        name: "Pastoral Care",
-        description:
-          "Spiritual support and guidance for parishioners during times of illness, grief, celebration, and spiritual growth.",
-        image: "/images/pastoral-care.jpg",
+        name: "Holy Matrimony",
+        description: "The sacrament uniting a man and woman in marriage before God, establishing a covenant of love and fidelity.",
+        image: "/images/wedding.jpg",
         requirements: [
-          "Request through parish office",
-          "Specific needs assessment",
+          "Baptismal certificates (recent copies for both bride and groom)",
+          "Confirmation certificates (for both parties)",
+          "Civil marriage license (valid Philippine marriage license)",
+          "Pre-marriage counseling (canonical interview and preparation)",
+          "Marriage preparation seminar (attend diocesan-approved program)"
         ],
         processSteps: [
-          {
-            step: "Contact",
-            description: "Call parish office to request pastoral care",
-          },
-          {
-            step: "Assessment",
-            description: "Pastor or pastoral team assesses specific needs",
-          },
-          {
-            step: "Care Provided",
-            description: "Ongoing pastoral support as needed",
-          },
+          { step: "Initial Consultation", description: "Meet with parish priest to discuss marriage plans" },
+          { step: "Document Preparation", description: "Gather and submit all required documents" },
+          { step: "Marriage Preparation", description: "Complete marriage preparation program and counseling" },
+          { step: "Final Arrangements", description: "Finalize ceremony details, music, and logistics" },
+          { step: "Wedding Rehearsal", description: "Practice ceremony with wedding party" },
+          { step: "Wedding Ceremony", description: "Celebration of Holy Matrimony" }
         ],
-        fees: "Free of charge",
-        contactInfo: "Parish Office: (02) 123-4567",
+        fees: "₱5,000 (church fee); ₱2,000 (priest stipend); ₱3,000 (music ministry, if using parish musicians); decorations variable",
+        contactInfo: "Wedding Coordinator: (02) 123-4567 ext. 102 | weddings@church.org",
         order: 3,
-        isActive: true,
-      },
-      {
-        name: "Community Outreach",
-        description:
-          "Programs to serve the poor, elderly, and marginalized in our community through various charitable initiatives.",
-        image: "/images/community-outreach.jpg",
-        requirements: [
-          "Volunteer registration",
-          "Background check (for certain programs)",
-          "Commitment to service",
-        ],
-        processSteps: [
-          {
-            step: "Volunteer Sign-up",
-            description: "Register as a volunteer through parish office",
-          },
-          {
-            step: "Training",
-            description: "Attend orientation and training sessions",
-          },
-          {
-            step: "Service",
-            description: "Participate in outreach activities",
-          },
-        ],
-        fees: "No fees - donations of time and resources welcome",
-        contactInfo: "Outreach Coordinator: outreach@church.org",
-        order: 4,
-        isActive: true,
-      },
+        isActive: true
+      }
     ];
-
-    await Service.insertMany(services);
-    console.log("✅ Services seeded successfully");
-
-    // Seed Sacraments
-    const sacraments = [
-      {
-        name: "baptism",
-        title: "Holy Baptism",
         description:
           "The sacrament of initiation into the Catholic Church, cleansing from original sin and welcoming the individual into the community of faith.",
         image: "/images/baptism.jpg",
@@ -478,8 +420,8 @@ We invite you to explore our various ministries and find ways to get involved in
       },
     ];
 
-    await Sacrament.insertMany(sacraments);
-    console.log("✅ Sacraments seeded successfully");
+  await Sacrament.insertMany(sacraments);
+  console.log("✅ Sacraments seeded successfully");
 
     console.log("\n🎉 All content data seeded successfully!");
     console.log("\n📋 Summary:");

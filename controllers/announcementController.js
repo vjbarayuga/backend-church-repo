@@ -16,7 +16,7 @@ export const createAnnouncement = async (req, res) => {
   try {
     let heroImage = req.body.heroImage;
     if (req.file) {
-      heroImage = path.join("/images", req.file.filename).replace(/\\/g, "/");
+      heroImage = req.file.path; // Cloudinary URL
     }
     const newAnnouncement = new Announcement({
       ...req.body,
@@ -33,9 +33,7 @@ export const updateAnnouncement = async (req, res) => {
   try {
     let updateData = { ...req.body };
     if (req.file) {
-      updateData.heroImage = path
-        .join("/images", req.file.filename)
-        .replace(/\\/g, "/");
+      updateData.heroImage = req.file.path; // Cloudinary URL
     }
     const updated = await Announcement.findByIdAndUpdate(
       req.params.id,

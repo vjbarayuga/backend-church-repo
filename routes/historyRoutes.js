@@ -2,7 +2,7 @@
 
 import express from "express";
 import { getHistory, updateHistory } from "../controllers/historyController.js";
-import upload from "../middleware/upload.js";
+import { upload } from "../config/cloudinary.js";
 
 const router = express.Router();
 

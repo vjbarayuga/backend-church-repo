@@ -27,11 +27,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve images statically from frontend/public/images
-import path from "path";
-const __dirname = path.resolve();
-app.use("/images", express.static(path.join(__dirname, "../frontend/public/images")));
-
 // Routes
 app.use("/api/announcements", announcementRoutes);
 app.use("/api/donations", donationRoutes);

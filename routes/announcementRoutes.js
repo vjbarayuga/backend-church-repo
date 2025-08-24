@@ -8,7 +8,7 @@ import {
   updateAnnouncement,
   deleteAnnouncement,
 } from "../controllers/announcementController.js";
-import upload from "../middleware/upload.js";
+import { upload } from "../config/cloudinary.js";
 
 const router = express.Router();
 

@@ -16,7 +16,7 @@ export const createPriest = async (req, res) => {
   try {
     let photo = req.body.photo;
     if (req.file) {
-      photo = path.join("/images", req.file.filename).replace(/\\/g, "/");
+      photo = req.file.path; // Cloudinary URL
     }
     const newPriest = new Priest({
       ...req.body,
@@ -33,9 +33,7 @@ export const updatePriest = async (req, res) => {
   try {
     let updateData = { ...req.body };
     if (req.file) {
-      updateData.photo = path
-        .join("/images", req.file.filename)
-        .replace(/\\/g, "/");
+      updateData.photo = req.file.path; // Cloudinary URL
     }
     const updated = await Priest.findByIdAndUpdate(req.params.id, updateData, {
       new: true,

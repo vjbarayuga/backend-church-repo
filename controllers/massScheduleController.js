@@ -18,7 +18,7 @@ export const createMassSchedule = async (req, res) => {
   try {
     let heroImage = req.body.heroImage;
     if (req.file) {
-      heroImage = path.join("/images", req.file.filename).replace(/\\/g, "/");
+      heroImage = req.file.path; // Cloudinary URL
     }
     const newSchedule = new MassSchedule({
       ...req.body,
@@ -35,9 +35,7 @@ export const updateMassSchedule = async (req, res) => {
   try {
     let updateData = { ...req.body };
     if (req.file) {
-      updateData.heroImage = path
-        .join("/images", req.file.filename)
-        .replace(/\\/g, "/");
+      updateData.heroImage = req.file.path; // Cloudinary URL
     }
     const updated = await MassSchedule.findByIdAndUpdate(
       req.params.id,

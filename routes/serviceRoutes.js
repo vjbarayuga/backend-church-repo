@@ -9,10 +9,11 @@ import {
   deleteService,
   toggleServiceStatus,
 } from "../controllers/serviceController.js";
-import upload from "../middleware/upload.js";
+import { upload } from "../config/cloudinary.js";
 
 const router = express.Router();
 
+// Only Holy Baptism, Christian Burial, and Holy Matrimony are allowed (see controller for enforcement)
 // Public routes
 router.get("/", getServices);
 router.get("/public/:id", getServiceById);
